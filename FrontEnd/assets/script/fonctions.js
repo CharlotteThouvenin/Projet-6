@@ -1,17 +1,41 @@
 // fonction fetch
 
-function fetchData (url, data) { async() =>{
-    const reponse = await fetch(url);
-    data= await reponse.json();
+async function fetchData() {
+    const response = await fetch("http://localhost:5678/api/works");
+    const data = await response.json();
+    console.log(data)
 
-    let utilData = data.map(data => {data.imageUrl, data.title, data.category.name});
-
-    genererGallery(utilData)
-
-}  
-}
 
 //récupérer uniquement les propriétés utiles
+
+    const utilData = data.map(item => ({
+      imageUrl: item.imageUrl,
+      title: item.title,
+      categoryName: item.category.name
+    }));
+    console.log(utilData)
+
+
+//récupérer les catégories
+
+const categoriesSet = new Set();
+
+utilData.forEach(item => {
+  categoriesSet.add(item.categoryName);
+});
+const categoriesArray = Array.from(categoriesSet);
+categoriesArray.unshift("Tous");
+
+console.log(categoriesArray);
+
+
+//
+    genererGallery(utilData);
+
+    genererFiltres(categoriesArray);
+
+}  
+
 
 
 
@@ -20,8 +44,7 @@ function fetchData (url, data) { async() =>{
 function genererGallery(data){
     for (let i = 0; i<data.length; i++){
         const gallery = document.querySelector(".gallery");
-        gallery.innerHTML = ""; /* efface le contenu */
-
+        
         const work = data[i];
 
         //création d'une balise qui contient un travail
@@ -45,6 +68,21 @@ function genererGallery(data){
 
 // fonction generer filtres
 
+function genererFiltres(categoryList) {
+    const filtres = document.querySelector(".filtres");
+    const boutonsArray = [];
+
+    for (let i = 0; i < categoryList.length; i++) {
+        const category = categoryList[i];
+        const boutonFiltres = document.createElement("button");
+        boutonFiltres.innerText = category;
+        filtres.appendChild(boutonFiltres);
+
+        boutonsArray.push(boutonFiltres);
+
+        console.log(boutonsArray)
+    }
+}
 
 
 // fonction filtrer
@@ -54,11 +92,12 @@ function filtrerTableau(data, fonctionFiltrage) {
   }
 
 function filtrerCategory (data, category) {
-    return data.category.name === category
+    return data.categoryName === category
 }
 
-let tableauFiltreCategory = filtrerTableau (data,filtrerCategory)
+
 
 
 // application des filtres
+
 
