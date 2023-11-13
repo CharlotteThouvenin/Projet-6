@@ -1,8 +1,6 @@
 
 // aller chercher les données dans l'API et les stocker dans un tableau worksData
 
-let worksData = [];
-
 const fetchWorksData = async () => {
         const reponse = await fetch("http://localhost:5678/api/works");
         worksData = await reponse.json();
@@ -46,6 +44,8 @@ function genererWorks(){
 
 
 const filtres = document.querySelector(".filtres");
+
+
 const boutonTous = document.createElement("button");
 boutonTous.innerText = "Tous";
 filtres.appendChild(boutonTous);
@@ -70,17 +70,16 @@ fetchCategoryList();
 function genererFiltres() {
     for (let i = 0; i < categoryList.length; i++) {
         const category = categoryList[i];
-
         const boutonFiltres = document.createElement("button");
         boutonFiltres.innerText = category.name;
         filtres.appendChild(boutonFiltres);
-
-        
-
     }
 }
 
-// fonctions pour filtrer
+
+
+
+
 
 // filtre objet
 
@@ -93,4 +92,3 @@ boutonObjet.addEventListener("click", function(){
     });
     console.log (workObjet);
 })
-
