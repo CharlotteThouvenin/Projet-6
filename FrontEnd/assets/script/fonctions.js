@@ -1,26 +1,56 @@
+let utilData = []
+
+let categoriesArray = []
+
+let boutonsArray = []
+
+
 // fonction fetch
+async function fetchData() {
+    const response = await fetch("http://localhost:5678/api/works");
+    const data = await response.json();
+    console.log(data)
 
-function fetchData (url, data) { async() =>{
-    const reponse = await fetch(url);
-    data= await reponse.json();
 
-    let utilData = data.map(data => {data.imageUrl, data.title, data.category.name});
+    //récupérer uniquement les propriétés utiles
 
-    genererGallery(utilData)
+    utilData = data.map(item => ({
+        imageUrl: item.imageUrl,
+        title: item.title,
+        categoryName: item.category.name
+    }));
+    console.log(utilData)
 
-}  
+
+    //récupérer les catégories
+
+    const categoriesSet = new Set();
+
+    utilData.forEach(item => {
+        categoriesSet.add(item.categoryName);
+    });
+    categoriesArray = Array.from(categoriesSet);
+    //rajout de la catégorie "tous"
+    categoriesArray.unshift("Tous");
+
+    console.log(categoriesArray);
+
+
+    //
+    genererGallery(utilData);
+
+    genererFiltres(categoriesArray);
+
 }
 
-//récupérer uniquement les propriétés utiles
 
 
 
 // fonction generer galerie
 
-function genererGallery(data){
-    for (let i = 0; i<data.length; i++){
+function genererGallery(data) {
+    for (let i = 0; i < data.length; i++) {
         const gallery = document.querySelector(".gallery");
-        gallery.innerHTML = ""; /* efface le contenu */
 
         const work = data[i];
 
@@ -35,9 +65,10 @@ function genererGallery(data){
         workImage.alt = work.title;
 
         //creation du titre
-        const workFigCaption = document.createElement ("figcaption");
+        const workFigCaption = document.createElement("figcaption");
         workFigure.appendChild(workFigCaption);
         workFigCaption.innerText = work.title;
+
 
     }
 
@@ -45,20 +76,58 @@ function genererGallery(data){
 
 // fonction generer filtres
 
+function genererFiltres(categoryList) {
+    const filtres = document.querySelector(".filtres");
+
+    for (let i = 0; i < categoryList.length; i++) {
+        const category = categoryList[i];
+        const boutonFiltres = document.createElement("button");
+        boutonFiltres.innerText = category;
+        filtres.appendChild(boutonFiltres);
+        boutonsArray.push(boutonFiltres);
+
+        boutonsArray.forEach((bouton, index) => {
+            bouton.categoryName = categoryList[index]
+        })
+
+        console.log(boutonsArray)
+    }
+    listenerFiltres()
+}
 
 
 // fonction filtrer
 
-function filtrerTableau(data, fonctionFiltrage) {
-    return data.filter(fonctionFiltrage);
-  }
-
-function filtrerCategory (data, category) {
-    return data.category.name === category
+function filtrer(data, category) {
+    console.log(data);
+    console.log(category);
+    return data.filter(item => item.categoryName === category);
 }
 
-let tableauFiltreCategory = filtrerTableau (data,filtrerCategory)
 
 
 // application des filtres
 
+function listenerFiltres() {
+    const boutonWorkFiltres = document.querySelectorAll(".filtres button");
+    console.log(boutonWorkFiltres)
+
+    for (let i = 0; i < boutonWorkFiltres.length; i++) {
+        boutonWorkFiltres[i].addEventListener("click", function () {
+            console.log(boutonWorkFiltres[i].categoryName)
+            console.log(utilData)
+            if (i > 0) {
+                let workFiltres = filtrer(utilData, boutonWorkFiltres[i].categoryName)
+                console.log(workFiltres)
+
+                document.querySelector(".gallery").innerHTML = "";
+                genererGallery(workFiltres);
+            } else {
+                document.querySelector(".gallery").innerHTML = "";
+                genererGallery(utilData);
+            }
+
+        })
+
+    }
+}
