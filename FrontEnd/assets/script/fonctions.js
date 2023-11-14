@@ -1,4 +1,9 @@
 // fonction fetch
+let utilData = []
+
+let categoriesArray = []
+
+let boutonsArray = []
 
 async function fetchData() {
     const response = await fetch("http://localhost:5678/api/works");
@@ -8,7 +13,7 @@ async function fetchData() {
 
 //récupérer uniquement les propriétés utiles
 
-    const utilData = data.map(item => ({
+    utilData = data.map(item => ({
       imageUrl: item.imageUrl,
       title: item.title,
       categoryName: item.category.name
@@ -23,7 +28,8 @@ const categoriesSet = new Set();
 utilData.forEach(item => {
   categoriesSet.add(item.categoryName);
 });
-const categoriesArray = Array.from(categoriesSet);
+categoriesArray = Array.from(categoriesSet);
+//rajout de la catégorie "tous"
 categoriesArray.unshift("Tous");
 
 console.log(categoriesArray);
@@ -62,6 +68,7 @@ function genererGallery(data){
         workFigure.appendChild(workFigCaption);
         workFigCaption.innerText = work.title;
 
+        
     }
 
 }
@@ -70,34 +77,61 @@ function genererGallery(data){
 
 function genererFiltres(categoryList) {
     const filtres = document.querySelector(".filtres");
-    const boutonsArray = [];
 
     for (let i = 0; i < categoryList.length; i++) {
         const category = categoryList[i];
         const boutonFiltres = document.createElement("button");
         boutonFiltres.innerText = category;
         filtres.appendChild(boutonFiltres);
-
         boutonsArray.push(boutonFiltres);
+
+        boutonsArray.forEach((bouton, index) => {
+            bouton.categoryName = categoryList[index]
+        })
 
         console.log(boutonsArray)
     }
+    listenerFiltres()
 }
 
 
 // fonction filtrer
 
-function filtrerTableau(data, fonctionFiltrage) {
-    return data.filter(fonctionFiltrage);
+function filtrer(data, category) {
+    console.log(data);
+    console.log(category);
+    return data.filter(item => item.categoryName === category);
   }
 
-function filtrerCategory (data, category) {
-    return data.categoryName === category
-}
+// fonction generer works filtrés
 
 
 
 
 // application des filtres
 
+function listenerFiltres(){
+    const boutonWorkFiltres = document.querySelectorAll(".filtres button");
+    console.log(boutonWorkFiltres)
+
+    for(let i = 0; i<boutonWorkFiltres.length; i++){
+        boutonWorkFiltres[i].addEventListener("click", function () {
+            console.log(boutonWorkFiltres[i].categoryName)
+            console.log(utilData)
+            if (i>0) {
+                  let workFiltres = filtrer (utilData, boutonWorkFiltres[i].categoryName)
+            console.log(workFiltres)
+
+            document.querySelector(".gallery").innerHTML = "";
+            genererGallery(workFiltres);
+            }
+            else {
+                document.querySelector(".gallery").innerHTML = "";
+                genererGallery(utilData);
+            }
+
+            })
+            
+        } 
+    }
 
