@@ -1,1 +1,4 @@
-fetchData()
+getAllWorks()
+
+genererFiltres()
+

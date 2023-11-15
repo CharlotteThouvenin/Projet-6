@@ -1,52 +1,35 @@
-let utilData = []
-
-let categoriesArray = []
-
-let boutonsArray = []
 
 
 // fonction fetch
-async function fetchData() {
+async function getAllWorks() {
     const response = await fetch("http://localhost:5678/api/works");
-    const data = await response.json();
-    console.log(data)
+    const works = await response.json();
 
+    genererGallery(works);
 
-    //récupérer uniquement les propriétés utiles
+    return works
+}
 
-    utilData = data.map(item => ({
-        imageUrl: item.imageUrl,
-        title: item.title,
-        categoryName: item.category.name
-    }));
-    console.log(utilData)
+// fonction récupérer les categories
 
+async function getAllCategories(){
+    const response = await fetch("http://localhost:5678/api/categories");
+    const categories = await response.json();
 
-    //récupérer les catégories
+    // rajout de la catégorie "Tous" en index 0 pour le bouton "Tous"
+    const tous = {
+        id:0,
+        name:"Tous"
+    }
+    categories.unshift(tous)
 
-    const categoriesSet = new Set();
-
-    utilData.forEach(item => {
-        categoriesSet.add(item.categoryName);
-    });
-    categoriesArray = Array.from(categoriesSet);
-    //rajout de la catégorie "tous"
-    categoriesArray.unshift("Tous");
-
-    console.log(categoriesArray);
-
-
-    //
-    genererGallery(utilData);
-
-    genererFiltres(categoriesArray);
-
+    return categories
 }
 
 
 
 
-// fonction generer galerie
+// fonction generer galerie (initiale et filtrées)
 
 function genererGallery(data) {
     for (let i = 0; i < data.length; i++) {
@@ -68,66 +51,74 @@ function genererGallery(data) {
         const workFigCaption = document.createElement("figcaption");
         workFigure.appendChild(workFigCaption);
         workFigCaption.innerText = work.title;
-
-
     }
-
 }
+
 
 // fonction generer filtres
 
-function genererFiltres(categoryList) {
+async function genererFiltres() {
+    const categories = await getAllCategories()
     const filtres = document.querySelector(".filtres");
+    const boutonsArray = []
 
-    for (let i = 0; i < categoryList.length; i++) {
-        const category = categoryList[i];
+    for (let i = 0; i < categories.length; i++) {
+        const category = categories[i].name;
         const boutonFiltres = document.createElement("button");
         boutonFiltres.innerText = category;
         filtres.appendChild(boutonFiltres);
         boutonsArray.push(boutonFiltres);
 
         boutonsArray.forEach((bouton, index) => {
-            bouton.categoryName = categoryList[index]
+            bouton.categoryName = categories[index].name
         })
-
         console.log(boutonsArray)
     }
+
     listenerFiltres()
 }
 
 
 // fonction filtrer
 
-function filtrer(data, category) {
-    console.log(data);
-    console.log(category);
-    return data.filter(item => item.categoryName === category);
+async function filtrer(category) {
+    const works = await getAllWorks ()
+    const filteredWorks = works.filter(work => work.category.name === category);
+
+    return filteredWorks
 }
 
 
 
 // application des filtres
 
-function listenerFiltres() {
+async function listenerFiltres() {
+
+    // récupérer les data à filtrer
+    let worksData = await getAllWorks();
+
+    // récupérer les boutons filtres
     const boutonWorkFiltres = document.querySelectorAll(".filtres button");
-    console.log(boutonWorkFiltres)
 
+    // ajout des eventlistener
     for (let i = 0; i < boutonWorkFiltres.length; i++) {
-        boutonWorkFiltres[i].addEventListener("click", function () {
+        boutonWorkFiltres[i].addEventListener("click", async function () {
             console.log(boutonWorkFiltres[i].categoryName)
-            console.log(utilData)
-            if (i > 0) {
-                let workFiltres = filtrer(utilData, boutonWorkFiltres[i].categoryName)
-                console.log(workFiltres)
 
+            // aplication de la fonction filtrer en excluant le bouton "Tous"  qui est en index 0 dans le tableau des boutons
+            if (i > 0) {
+                let workFiltres = await filtrer(boutonWorkFiltres[i].categoryName)
+                console.log(workFiltres)
+                // effacer la galerie en cours
                 document.querySelector(".gallery").innerHTML = "";
+                // et afficher la galerie du resultat des filtres
                 genererGallery(workFiltres);
+
             } else {
                 document.querySelector(".gallery").innerHTML = "";
-                genererGallery(utilData);
+                genererGallery(worksData);
             }
 
         })
-
     }
 }
