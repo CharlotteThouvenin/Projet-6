@@ -48,10 +48,25 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+}
+
+.container{
+	max-width: 1140px;
+	margin:auto;
+}	
+
+.mode_edition{
+	display: flex;
+	align-items: center;
+	background-color: black;
+	color: #FFFFFF;
+	justify-content: center;
+	height: 59px;
+	margin: 0;
+	font-size: 16px;
+	font-family: Work Sans;
 }
 
 
@@ -129,24 +144,38 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+.projets{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin: 100px 0 50px 0;
+}
+
+.edit_button{
+	margin-bottom: 1.5em;
+	position: absolute;
+	transform: translateX(170px);
+	
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
 
-#portfolio h2 span{
-	display: none;
-}
 
 .edit_icon{
 	height: 15px;
-	color:red
+	padding-right: 5px;
 }
 
 
 .filtres{
-	width: 585px;
-	margin: auto;
+	height: 37px;
+	margin: 0 0 50px 0;
+	display: flex;
+	justify-content: center;
 }
 .filtres button{
 	cursor: pointer;
@@ -158,7 +187,7 @@ li:hover {
 	padding: 0 10px;
 	color: #1D6154;
 	border: solid 1px #1D6154;
-	margin : 2em 4px ;
+	margin : 0 4px ;
 	text-align: center;
 	border-radius: 60px ;
 }
@@ -233,11 +262,17 @@ footer nav ul {
 
 .body__login{
 	height:1024px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	background-color: rgba(255, 254, 248, 1);
-	;
+	margin:auto;
+	max-width: 1140px;
+}
+
+.body__login .container{
+	margin: 0;
 }
 .body__login main{
 	display: flex;

@@ -19,9 +19,9 @@ function logingOut(button) {
 
 // creation des éléments de modifications
 
-function iconEditMode(parent, texte) {
+function iconEditMode(parent, texte, iconSrc) {
     const icon = document.createElement("img");
-    icon.src = "./assets/icons/pen-to-square-regular.svg";
+    icon.src = iconSrc;
     parent.appendChild(icon);
     icon.classList.add("edit_icon");
 
@@ -39,7 +39,7 @@ function addEditionModeBanner() {
     body.insertBefore(editBanner, body.firstChild);
     editBanner.classList.add("mode_edition")
 
-    iconEditMode(editBanner, "Mode édition");
+    iconEditMode(editBanner, "Mode édition", "./assets/icons/Vector (1).svg");
 
 }
 
@@ -51,7 +51,7 @@ function addEditButton() {
     const editButton = document.createElement("div")
     mesProjets.appendChild(editButton)
     editButton.classList.add("edit_button")
-    iconEditMode(editButton, "modifier")
+    iconEditMode(editButton, "modifier", "./assets/icons/pen-to-square-regular.svg")
 }
 
 

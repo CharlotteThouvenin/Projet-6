@@ -58,8 +58,13 @@ function genererGallery(data) {
 // fonction generer filtres
 
 async function genererFiltres() {
-    const categories = await getAllCategories()
-    const filtres = document.querySelector(".filtres");
+    const categories = await getAllCategories();
+    const portfolio = document.getElementById("portfolio");
+    const filtres = document.createElement("div");
+    const gallery = portfolio.children[1]
+    portfolio.insertBefore(filtres, gallery);
+    console.log(filtres)
+    filtres.classList.add("filtres")
     const boutonsArray = []
 
     for (let i = 0; i < categories.length; i++) {
