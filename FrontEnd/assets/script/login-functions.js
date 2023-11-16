@@ -62,6 +62,10 @@ function messageErreur() {
 // fonction renvoyer sur page d'acceuil et stocker le token
 
 function logInOk(response){
+    // stocker le token
     sessionStorage.setItem("Token", response.token);
+    // renvoi sur la page d'accueil
     window.location.replace("index.html")
-}
+    // message d'accueil 
+    alert("Connection réussie!")
+}   

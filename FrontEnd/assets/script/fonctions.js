@@ -72,7 +72,6 @@ async function genererFiltres() {
         boutonsArray.forEach((bouton, index) => {
             bouton.categoryName = categories[index].name
         })
-        console.log(boutonsArray)
     }
 
     listenerFiltres()
