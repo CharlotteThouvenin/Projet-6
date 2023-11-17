@@ -52,7 +52,14 @@ function addEditButton() {
     mesProjets.appendChild(editButton)
     editButton.classList.add("edit_button")
     iconEditMode(editButton, "modifier", "./assets/icons/pen-to-square-regular.svg")
+    listenerEditButton(editButton)
 }
 
+function listenerEditButton (editButton){
+    editButton.addEventListener("click", function(){
+        console.log("click edit");
+        createModale();
+    })
+}
 
 // création modale

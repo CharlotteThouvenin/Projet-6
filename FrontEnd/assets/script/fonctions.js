@@ -1,20 +1,39 @@
+// fonction fetch avec methode get pour récupérer les données
+
+async function getFetch (url) {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return(data)
+}
 
 
-// fonction fetch
+// fonction pour récupérer tous les travaux
+
 async function getAllWorks() {
-    const response = await fetch("http://localhost:5678/api/works");
-    const works = await response.json();
 
-    genererGallery(works);
+    const worksUrl = "http://localhost:5678/api/works";
+    const works = await getFetch(worksUrl)
 
     return works
+}
+
+// fonction pour générer la galerie initiale
+
+async function generateInitialWoksGallery(){
+    const allWorks = await getAllWorks();
+    console.log(allWorks)
+
+    genererGallery(allWorks);
 }
 
 // fonction récupérer les categories
 
 async function getAllCategories(){
-    const response = await fetch("http://localhost:5678/api/categories");
-    const categories = await response.json();
+
+    const categoriesUrl = "http://localhost:5678/api/categories"
+
+    const categories = await getFetch(categoriesUrl)
 
     // rajout de la catégorie "Tous" en index 0 pour le bouton "Tous"
     const tous = {
@@ -28,8 +47,7 @@ async function getAllCategories(){
 
 
 
-
-// fonction generer galerie (initiale et filtrées)
+// fonction generer une galerie galerie (initiale et filtrées)
 
 function genererGallery(data) {
     for (let i = 0; i < data.length; i++) {
