@@ -1,5 +1,6 @@
 generateInitialWoksGallery()
 
+
 const token = sessionStorage.getItem("Token")
 
 if(token){
@@ -11,3 +12,4 @@ if(token){
 else{
     genererFiltres()
 }
+

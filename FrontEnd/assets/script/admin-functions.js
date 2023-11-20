@@ -3,27 +3,26 @@ function createlogOut() {
     const logButton = document.querySelector("nav a");
     logButton.innerText = "logout";
     logButton.href = "";
-    console.log(logButton)
-
+   
     logingOut(logButton)
 
 }
+
 // listener sur logout
 
 function logingOut(button) {
     button.addEventListener("click", function () {
-        alert("Vous êtes maintenant déconnecté")
         sessionStorage.clear("Token")
     })
 }
 
 // creation des éléments de modifications
 
-function iconEditMode(parent, texte, iconSrc) {
-    const icon = document.createElement("img");
-    icon.src = iconSrc;
-    parent.appendChild(icon);
-    icon.classList.add("edit_icon");
+function iconEditMode(parent, texte) {
+    const icon= createDomElements("i", parent, "edit_icon")
+    icon.classList.add("fa-solid")
+    icon.classList.add("fa-pen-to-square")
+
 
     const text = document.createElement("span");
     parent.appendChild(text);
@@ -33,14 +32,11 @@ function iconEditMode(parent, texte, iconSrc) {
 // ajout bannière mode Edition
 
 function addEditionModeBanner() {
-
-    const editBanner = document.createElement("div")
     const body = document.querySelector("body")
+    const editBanner = createDomElements("div", body, "mode_edition")
     body.insertBefore(editBanner, body.firstChild);
-    editBanner.classList.add("mode_edition")
 
-    iconEditMode(editBanner, "Mode édition", "./assets/icons/Vector (1).svg");
-
+    iconEditMode(editBanner, "Mode édition");
 }
 
 
@@ -48,18 +44,15 @@ function addEditionModeBanner() {
 
 function addEditButton() {
     const mesProjets = document.querySelector(".projets")
-    const editButton = document.createElement("div")
-    mesProjets.appendChild(editButton)
-    editButton.classList.add("edit_button")
-    iconEditMode(editButton, "modifier", "./assets/icons/pen-to-square-regular.svg")
-    listenerEditButton(editButton)
+    const editButton = createDomElements("div", mesProjets, "edit_button")
+    iconEditMode(editButton, "modifier")
+    listener(editButton, createGalleryModale)
 }
 
+/*
 function listenerEditButton (editButton){
     editButton.addEventListener("click", function(){
-        console.log("click edit");
-        createModale();
+        createGalleryModale();
     })
-}
+}*/
 
-// création modale

@@ -322,7 +322,7 @@ font-weight: 500;
 	border: none;
 }
 
-
+/* Style modale modifier */
 .modale{
 	/*display: none;*/
 	background-color: rgba(0, 0, 0, 0.3);
@@ -374,6 +374,14 @@ font-weight: 500;
 	border-bottom: solid 1px rgba(179, 179, 179, 1);
 }
 
+.modale__content__gallery figure{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	position: relative;
+}
+
+
 .modale__content__gallery__image{
 	width: 76.86px;
 	height: 102.57px;
@@ -381,10 +389,22 @@ font-weight: 500;
 }
 
 .modale__content__gallery__icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: absolute;
+	color: white;
+	background-color: black;
+	border-radius: 2px;
+	margin: 5px;
+	cursor: pointer;
+	font-size: 11px;
+	width: 17px;
+	height: 17px;
 }
 
 .modal__content__addbutton{
+	cursor: pointer;
 	width: 237px;
 	height: 36px;
 	border-radius: 60px;
@@ -394,4 +414,42 @@ font-weight: 500;
 	font-size: 14px;
 	font-weight: 700;
 	margin-bottom: 40px;
+}
+
+
+/* Sytle modale Ajout Photo */
+.addmodale__content{
+	width: 630px;
+	height: 688px;
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	position: absolute;
+	z-index: 2;
+}
+
+
+
+.addmodale__content__load{
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	background-color: rgb(232, 241, 246, 1)
+
+}
+
+.addmodale__content__backandclose{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+}
+
+.addmodale__content__backArrow{
+	margin-left: 30px;
+    margin-top: 20px;
+	cursor: pointer;
 }

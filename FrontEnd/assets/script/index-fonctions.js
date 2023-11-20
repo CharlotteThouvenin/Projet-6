@@ -1,11 +1,3 @@
-// fonction fetch avec methode get pour récupérer les données
-
-async function getFetch (url) {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return(data)
-}
 
 
 // fonction pour récupérer tous les travaux
@@ -22,8 +14,6 @@ async function getAllWorks() {
 
 async function generateInitialWoksGallery(){
     const allWorks = await getAllWorks();
-    console.log(allWorks)
-
     genererGallery(allWorks);
 }
 
@@ -47,49 +37,23 @@ async function getAllCategories(){
 
 
 
-// fonction generer une galerie galerie (initiale et filtrées)
-
-function genererGallery(data) {
-    for (let i = 0; i < data.length; i++) {
-        const gallery = document.querySelector(".gallery");
-
-        const work = data[i];
-
-        //création d'une balise qui contient un travail
-        const workFigure = document.createElement("figure");
-        gallery.appendChild(workFigure);
-
-        //création d'une balise image 
-        const workImage = document.createElement("img");
-        workFigure.appendChild(workImage);
-        workImage.src = work.imageUrl;
-        workImage.alt = work.title;
-
-        //creation du titre
-        const workFigCaption = document.createElement("figcaption");
-        workFigure.appendChild(workFigCaption);
-        workFigCaption.innerText = work.title;
-    }
-}
-
-
 // fonction generer filtres
 
 async function genererFiltres() {
     const categories = await getAllCategories();
     const portfolio = document.getElementById("portfolio");
-    const filtres = document.createElement("div");
-    const gallery = portfolio.children[1]
+    const gallery = document.querySelector(".gallery")
+
+    const filtres = createDomElements("div",portfolio,"filtres")
+
     portfolio.insertBefore(filtres, gallery);
-    console.log(filtres)
-    filtres.classList.add("filtres")
+
     const boutonsArray = []
 
     for (let i = 0; i < categories.length; i++) {
         const category = categories[i].name;
-        const boutonFiltres = document.createElement("button");
+        const boutonFiltres = createDomElements("button", filtres);
         boutonFiltres.innerText = category;
-        filtres.appendChild(boutonFiltres);
         boutonsArray.push(boutonFiltres);
 
         boutonsArray.forEach((bouton, index) => {
@@ -98,16 +62,6 @@ async function genererFiltres() {
     }
 
     listenerFiltres()
-}
-
-
-// fonction filtrer
-
-async function filtrer(category) {
-    const works = await getAllWorks ()
-    const filteredWorks = works.filter(work => work.category.name === category);
-
-    return filteredWorks
 }
 
 
@@ -125,12 +79,9 @@ async function listenerFiltres() {
     // ajout des eventlistener
     for (let i = 0; i < boutonWorkFiltres.length; i++) {
         boutonWorkFiltres[i].addEventListener("click", async function () {
-            console.log(boutonWorkFiltres[i].categoryName)
-
             // aplication de la fonction filtrer en excluant le bouton "Tous"  qui est en index 0 dans le tableau des boutons
             if (i > 0) {
                 let workFiltres = await filtrer(boutonWorkFiltres[i].categoryName)
-                console.log(workFiltres)
                 // effacer la galerie en cours
                 document.querySelector(".gallery").innerHTML = "";
                 // et afficher la galerie du resultat des filtres

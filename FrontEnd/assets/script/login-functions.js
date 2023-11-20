@@ -20,6 +20,11 @@ function loginDataListener() {
     });
 
 }
+
+// fonction récupérer les données du formulaire d'authentification
+
+
+
 // fonction convertir en json
 function chargeUtile(data) {
     const chargeUtileData = JSON.stringify(data)
@@ -66,6 +71,4 @@ function logInOk(response){
     sessionStorage.setItem("Token", response.token);
     // renvoi sur la page d'accueil
     window.location.replace("index.html")
-    // message d'accueil 
-    alert("Connection réussie!")
 }   
