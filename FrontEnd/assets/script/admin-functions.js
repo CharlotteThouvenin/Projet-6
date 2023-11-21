@@ -46,8 +46,11 @@ function addEditButton() {
     const mesProjets = document.querySelector(".projets")
     const editButton = createDomElements("div", mesProjets, "edit_button")
     iconEditMode(editButton, "modifier")
-    listener(editButton, createGalleryModale)
+    editButton.addEventListener("click", function(){
+        afficherModale()
+    })
 }
+
 
 /*
 function listenerEditButton (editButton){

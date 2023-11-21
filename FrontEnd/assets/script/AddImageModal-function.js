@@ -2,50 +2,44 @@
 
 async function createEditModale(){
 
-    const modale = document.querySelector(".modale")
-    const addmodaleContent = createDomElements("div", modale, "addmodale__content")
-    
 
-    const addmodaleBackAndClose= createDomElements("div", addmodaleContent, "addmodale__content__backandclose");
+    const modaleContent = document.querySelector(".modale__content")
+
 
     //ajout flèche retour
 
-    const backArrow= createDomElements("img", addmodaleBackAndClose, "addmodale__content_backArrow");
-    backArrow.src = "./assets/icons/backArrow.svg";
-    backArrow.addEventListener("click", function(){
-        addmodaleContent.parentNode.removeChild(addmodaleContent)
-        })
+    const backArrow= document.querySelector(".fa-arrow-left");
+    backArrow.style.opacity = "1"
 
-    //ajout de la croix pour fermer
-    const closingModaleButton = createDomElements("img", addmodaleBackAndClose, "addmodale__content__closebutton");
-    closingModaleButton.src="./assets/icons/Vector (4).svg";
-    closingModaleButton.addEventListener("click", function (){
-        removeModale()
-     })
+    backArrow.addEventListener("click", function(){
+        modaleContent.innerHTML="";
+        backArrow.style.opacity = "0"
+        createContentModale()
+        })
 
  
      
-     //ajout titre
-     const modaleTitle = createDomElements("h1", addmodaleContent, "modale__content__title");
+     //modification titre
+     const modaleTitle = document.querySelector(".modale__title")
      modaleTitle.innerText = "Ajout photo";
 
 
      // ajout contenu
 
-     const addImageForm = createDomElements("form", addmodaleContent, "addmodale__content__form")
+     const addImageForm = createDomElements("form", modaleContent, "modale__content__form")
      addImageForm.enctype = "multipart/form-data"
 
-     const divLoadImage = createDomElements("div", addImageForm, "addmodale__content__form__load");
+     const divLoadImage = createDomElements("div", addImageForm, "modale__content__form__load");
 
-     const imageIcon = createDomElements("i", divLoadImage, "addmodale__content__form__load__icon");
+     const imageIcon = createDomElements("i", divLoadImage, "modale__content__form__load__icon");
      imageIcon.classList.add("fa-solid")
      imageIcon.classList.add("fa-image")
 
-     const imageInput = createDomElements("input", divLoadImage, "addmodale__content__form__load__input");
+     const imageInput = createDomElements("input", divLoadImage, "modale__content__form__load__input");
      imageInput.type="file"
      imageInput.accept=".jpeg, .png "
 
-     const ajoutbutton = createDomElements("button", divLoadImage, "addmodale__content__load__form__load__submit")
+     const ajoutbutton = createDomElements("button", divLoadImage, "modale__content__form__load__submit")
      ajoutbutton.type="submit"
      ajoutbutton.innerText="+ Ajouter photo"
 
@@ -76,7 +70,28 @@ async function createEditModale(){
         categorieChoice.value = categoriesList[i].name
         categorieChoice.innerText = categoriesList[i].name
      }
-
-     const submitImage = createDomElements("button", addImageForm, "addmodale__content__form__submit")
-     submitImage.innerText = "Valider"
 }
+
+/*
+function previewImage() {
+    var input = document.getElementById('inputFile');
+    var preview = document.getElementById('imagePreview');
+    
+    while (preview.firstChild) {
+        preview.removeChild(preview.firstChild);
+    }
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            preview.appendChild(img);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}*/

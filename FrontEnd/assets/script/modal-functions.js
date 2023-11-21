@@ -1,48 +1,47 @@
-// fonction creation d'une modale dans le dom
-function createModale(){
-    const body = document.querySelector("body")
+// affichage de la modale
 
-    //creation de la modale
-    const modale = createDomElements("aside", body, "modale");
-    
-    // fermeture au click en dehors du la fenetre contenu
-    modale.addEventListener("click", function(event) {
-        if (event.target === modale) {
-            removeModale();
-        }
-    });
-    
-    //creation de la div avec le contenu
-    const modaleContent = createDomElements("div", modale, "modale__content")
-
-    return modaleContent
+function afficherModale(){
+    document.querySelector(".modale__container").style.display = "flex"
+    createContentModale()
 }
 
 
-// Création de la modale Galerie Photo
+// fermeture de la modale
+const modaleContainer = document.querySelector(".modale__container")
+modaleContainer.addEventListener("click", function(event) {
+        if (event.target === modaleContainer) {
+            closeModale();
+        }
+    })
+ const closingModaleButton = document.querySelector(".fa-xmark")
+ closingModaleButton.addEventListener("click", function(){
+    closeModale()
+ })
 
-function createGalleryModale (){
 
-    const modaleContent = createModale()
-    
-    //ajout de la croix pour fermer
-    const closingModaleButton = createDomElements("img", modaleContent, "modale__content__closebutton");
-    closingModaleButton.src="./assets/icons/Vector (4).svg";
-    listener(closingModaleButton, removeModale)
-    
 
-    //ajout du titre
-    const modaleTitle = createDomElements("h1", modaleContent, "modale__content__title");
+
+
+// Création du contenu de la modale
+
+function createContentModale (){
+
+    const modale = document.querySelector(".modale")
+    const modaleTitle = document.querySelector(".modale__title")
     modaleTitle.innerText = "Galerie photo";
 
     //ajout de la galerie
+    const modaleContent = document.querySelector(".modale__content")
     const modaleGallery = createDomElements("div",modaleContent, "modale__content__gallery" );
     createModalGallery()
 
     //ajout du bouton ajouter une photo
-    const modaleAddButton = createDomElements("button", modaleContent, "modal__content__addbutton");
+    const modaleAddButton = document.querySelector(".modale__submit")
     modaleAddButton.innerText = "Ajouter une photo";
-    listener(modaleAddButton, createEditModale)
+    modaleAddButton.addEventListener("click", function(){
+        modaleContent.innerHTML="";
+        createEditModale()
+    })
 }
 
 
@@ -56,8 +55,6 @@ async function createModalGallery (){
 
 function genererModaleGallery(data) {
 
-    const workFigureArray=[]
-
     for (let i = 0; i < data.length; i++) {
         const modalegallery = document.querySelector(".modale__content__gallery");
 
@@ -65,7 +62,6 @@ function genererModaleGallery(data) {
 
         //création d'une balise qui contient un travail
         const workFigure = createDomElements("figure", modalegallery, "modale__content__gallery__figure")
-        workFigureArray.push(workFigure)
         
 
         //création d'une balise image 
@@ -73,7 +69,6 @@ function genererModaleGallery(data) {
         workImage.src = work.imageUrl;
         workImage.alt = work.title;
         
-
 
         //creation du bouton poubelle
         const workTrashIcon= createDomElements("i", workFigure, "modale__content__gallery__icon")
@@ -84,29 +79,24 @@ function genererModaleGallery(data) {
             console.log(event.target.closest("figure"))
             let reponseUser = confirm('Voulez vous vraiment supprimer ce travail ?')
             if(reponseUser === true){
-                // fonction supprimer travail
+
                 deleteWork(work.id)
 
                 event.target.closest("figure").remove()
-                // suprimer la galerie existante
-               // const gallery= document.querySelector(".modale__content__gallery")
-               // gallery.innerHTML=""
-                // re generer la galerie avec les données à jour
-                //createModalGallery()
+
             }
     
         })
     }
 }
 
-// fonction pour supprimer la modale
+// fonction pour fermer la modale
 
-function removeModale (){
-    const modale=document.querySelector(".modale");
-
-    if(modale){
-        modale.parentNode.removeChild(modale);
-    }
+function closeModale (){
+    const modaleContainer=document.querySelector(".modale__container");
+    modaleContainer.style.display="none";
+    const modaleContent = document.querySelector(".modale__content");
+    modaleContent.innerHTML="";
 }
 
 
