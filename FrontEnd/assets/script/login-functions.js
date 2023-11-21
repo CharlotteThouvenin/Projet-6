@@ -57,8 +57,9 @@ async function sendLoginData(chargeUtile) {
 // fonction afficher message erreur
 
 function messageErreur() {
-    const messageErreurElement = document.querySelector(".messageErreur");
-    messageErreurElement.innerText = "Utilisateur non trouvé, veuillez réessayer";
+    const loginForm = document.querySelector(".login__form");
+    const messageErreurElement = createDomElements("div", loginForm, "messageErreur" )
+    messageErreurElement.innerText = "Les informations saisies sont incorrectes, veuillez réessayer";
 }
 
 

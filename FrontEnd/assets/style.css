@@ -210,34 +210,34 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#contact , .login__section {
 	width: 50%;
 margin: auto;
 }
-#contact > * {
+#contact ,.login__section > * {
 	text-align: center;
 
 }
-#contact h2{
+#contact h2, .login__section h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form , .login__form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, .login__form input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, .login__form label {
 	margin: 2em 0 1em 0;
 }
-#contact textarea {
+#contact textarea , .login__form textarea{
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
@@ -261,8 +261,7 @@ footer nav ul {
 }
 
 .body__login{
-	height:1024px;
-	width: 100%;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -273,54 +272,52 @@ footer nav ul {
 
 .body__login .container{
 	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height:1024px;
+	width: 100%;
 }
 .body__login main{
 	display: flex;
 	justify-content: center;
+	margin-top: -70px;
 }
+
+.body__login footer{
+	background: rgba(255, 255, 255, 1);
+
+}
+
 .login__section{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 379px;
 	height:500px;
-	align-self: center;
 }
 
-.login__section h1{
-	font-size: 30px;
-	font-weight: 700;
-	color: #1D6154;
-	margin: 30px;
-}
-
-.login__form{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-}
 
 .login__form input{
 	width: 379px;
-	margin-bottom: 15px;
 	height: 51px;
-	border: none;
-	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 }
 
-.login__form label{
-	margin-bottom: 5px;
-	font-family: Work Sans;
-font-size: 14px;
-font-weight: 500;
-}
 
 .login__form input[type="submit"]{
 	width: 179px;
-	font-size: 14px;
-	height: 36px;
-	border: none;
 }
+
+.login__section a{
+	text-decoration: underline;
+}
+
+.messageErreur{
+	color:red;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
 
 /* Style modale modifier */
 .modale{
@@ -389,9 +386,6 @@ font-weight: 500;
 }
 
 .modale__content__gallery__icon{
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	position: absolute;
 	color: white;
 	background-color: black;
@@ -401,6 +395,8 @@ font-weight: 500;
 	font-size: 11px;
 	width: 17px;
 	height: 17px;
+	text-align: center;
+	line-height: 17px;
 }
 
 .modal__content__addbutton{
@@ -426,20 +422,42 @@ font-weight: 500;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
 	position: absolute;
 	z-index: 2;
+	justify-content: space-between;
+}
+
+.addmodale__content__form{
+	display: flex;
+	flex-direction: column;
+	height:500px
 }
 
 
-
-.addmodale__content__load{
+.addmodale__content__form__load{
 	width: 420px;
 	height: 169px;
 	border-radius: 3px;
-	background-color: rgb(232, 241, 246, 1)
+	background-color: rgb(232, 241, 246, 1);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 
 }
+
+.addmodale__content__form__load__icon{
+	font-size: 60px;
+	color: rgba(185, 197, 204, 1);
+	text-align: center;
+}
+
+/*
+.addmodale__content__form__load__input{
+	display: none;
+}
+*/
+
 
 .addmodale__content__backandclose{
 	display: flex;

@@ -52,7 +52,6 @@ function createGalleryModale (){
 async function createModalGallery (){
     const allWorks = await getAllWorks();
     genererModaleGallery(allWorks);
-
 }
 
 function genererModaleGallery(data) {
@@ -81,17 +80,23 @@ function genererModaleGallery(data) {
         workTrashIcon.classList.add("fa-solid")
         workTrashIcon.classList.add("fa-trash-can")
 
-        workTrashIcon.addEventListener("click", function(){
+        workTrashIcon.addEventListener("click", function(event){
+            console.log(event.target.closest("figure"))
             let reponseUser = confirm('Voulez vous vraiment supprimer ce travail ?')
             if(reponseUser === true){
-                console.log("je veux supprimer")
                 // fonction supprimer travail
-                // fonction generer gallery
+                deleteWork(work.id)
+
+                event.target.closest("figure").remove()
+                // suprimer la galerie existante
+               // const gallery= document.querySelector(".modale__content__gallery")
+               // gallery.innerHTML=""
+                // re generer la galerie avec les données à jour
+                //createModalGallery()
             }
     
         })
     }
-    console.log(workFigureArray)
 }
 
 // fonction pour supprimer la modale
@@ -110,10 +115,13 @@ function removeModale (){
 //fonction  pour supprimer un travail
 
 async function deleteWork (id){
-    await fetch(`http://localhost:5678/api/works/ ${id}` , {
+    await fetch(`http://localhost:5678/api/works/${id}` , {
         method: "DELETE",
-        headers: {"Content-Type": "application/json"},
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+ sessionStorage.getItem("Token")
+        },
+        
     })
 }
 
-// fonction pour ajouter un travail

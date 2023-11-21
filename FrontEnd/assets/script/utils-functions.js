@@ -57,3 +57,12 @@ async function filtrer(category) {
     return filteredWorks
 }
 
+// fontion pour generer un champs de formulaire
+
+function champsFormulaire (parent, textLabel, inputType){
+    const label = createDomElements("label", parent)
+    label.innerText = textLabel
+    
+    const input = createDomElements("input", parent)
+    input.type = inputType
+}
