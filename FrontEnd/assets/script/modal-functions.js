@@ -36,7 +36,7 @@ function createContentModale (){
     createModalGallery()
 
     //ajout du bouton ajouter une photo
-    const modaleAddButton = document.querySelector(".modale__submit")
+    const modaleAddButton = createDomElements("button", modaleContent, "modale__submit")
     modaleAddButton.innerText = "Ajouter une photo";
     modaleAddButton.addEventListener("click", function(){
         modaleContent.innerHTML="";
@@ -76,7 +76,7 @@ function genererModaleGallery(data) {
         workTrashIcon.classList.add("fa-trash-can")
 
         workTrashIcon.addEventListener("click", function(event){
-            console.log(event.target.closest("figure"))
+
             let reponseUser = confirm('Voulez vous vraiment supprimer ce travail ?')
             if(reponseUser === true){
 
@@ -97,6 +97,7 @@ function closeModale (){
     modaleContainer.style.display="none";
     const modaleContent = document.querySelector(".modale__content");
     modaleContent.innerHTML="";
+    updateIndexGallery();
 }
 
 

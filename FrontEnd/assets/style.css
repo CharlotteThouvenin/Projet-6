@@ -228,13 +228,13 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input, .login__form input {
+#contact input, .login__form input, .modale__content__form input, .modale__content__form select{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label, .login__form label {
+#contact label, .login__form label, .modale__content__form label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea , .login__form textarea{
@@ -449,11 +449,12 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 .modale__content__form__load__icon{
-	font-size: 50px;
+	font-size: 80px;
+	color:rgba(185, 197, 204, 1)
 }
 
 .modale__content__form__load__submit{
@@ -466,6 +467,21 @@ footer nav ul {
 	font-family: Work Sans;
 	font-size: 14px;
 	font-weight: 500;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 
+}
+
+.modale__content__form__load__input{
+	display: none;
+}
+
+.modale__content__form__load__preview{
+	max-height: 170px;
+}
+
+.modale__content__form__load p{
+	color: rgba(68, 68, 68, 1);
 }

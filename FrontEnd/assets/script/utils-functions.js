@@ -66,3 +66,10 @@ function champsFormulaire (parent, textLabel, inputType){
     const input = createDomElements("input", parent)
     input.type = inputType
 }
+
+// fontion pour mettre à jour la gallery
+
+async function updateIndexGallery(){
+    document.querySelector(".gallery").innerHTML = "";
+    generateInitialWoksGallery();
+}

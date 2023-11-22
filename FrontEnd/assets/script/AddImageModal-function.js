@@ -28,22 +28,49 @@ async function createEditModale(){
 
      const addImageForm = createDomElements("form", modaleContent, "modale__content__form")
      addImageForm.enctype = "multipart/form-data"
+     
+     addImageForm.addEventListener("submit", function(event){
+        event.preventDefault()
+        let formData = new FormData();
+        formData.append("title", titreInput.value);
+        formData.append("image", imageInput.files[0]);
+        formData.append("category", categorieInput.value)
+        console.log(formData)
+        postNewWork(formData);
+        updateIndexGallery();
+     })
 
      const divLoadImage = createDomElements("div", addImageForm, "modale__content__form__load");
+     const imagePreview = createDomElements("img", divLoadImage, "modale__content__form__load__preview")
+     imagePreview.style.display="none";
 
      const imageIcon = createDomElements("i", divLoadImage, "modale__content__form__load__icon");
      imageIcon.classList.add("fa-solid")
      imageIcon.classList.add("fa-image")
 
-     const imageInput = createDomElements("input", divLoadImage, "modale__content__form__load__input");
+     const imageInput = createDomElements("input", addImageForm, "modale__content__form__load__input");
      imageInput.type="file"
      imageInput.accept=".jpeg, .png "
+     imageInput.id = "image__input"
+     imageInput.classList.add("hide")
 
-     const ajoutbutton = createDomElements("button", divLoadImage, "modale__content__form__load__submit")
-     ajoutbutton.type="submit"
-     ajoutbutton.innerText="+ Ajouter photo"
+     imageInput.addEventListener("change", function () {
+       
+        const selectedFile = imageInput.files[0];
+        previewImage(selectedFile, imagePreview);
+        imageIcon.style.display="none";
+        ajoutbutton.style.display="none";
+        ajoutDetails.style.display="none"
+       
+    });
 
-     const ajoutDetails = createDomElements("p", divLoadImage)
+
+
+     const ajoutbutton = createDomElements("label", addImageForm, "modale__content__form__load__submit")
+     ajoutbutton.innerText = "+ Ajouter photo"
+     ajoutbutton.htmlFor = "image__input"
+
+     const ajoutDetails = createDomElements("p", addImageForm)
      ajoutDetails.innerText ="jpg, png : 4mo max"
 
      const titreLabel = createDomElements("label", addImageForm)
@@ -61,37 +88,58 @@ async function createEditModale(){
      defaultCategorieChoice.value =""
 
      const categoriesList = await getAllCategories()
-     //categoriesList.splice(0,1)
-     console.log(categoriesList)
 
      for(let i = 1; i<categoriesList.length; i++){
-        console.log(categoriesList)
         const categorieChoice = createDomElements("option", categorieInput)
-        categorieChoice.value = categoriesList[i].name
+        categorieChoice.value = categoriesList[i].id
         categorieChoice.innerText = categoriesList[i].name
      }
-}
 
-/*
-function previewImage() {
-    var input = document.getElementById('inputFile');
-    var preview = document.getElementById('imagePreview');
-    
-    while (preview.firstChild) {
-        preview.removeChild(preview.firstChild);
+     const formSubmitButton = createDomElements("button", addImageForm, "modale__content__form__submit")
     }
 
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
+// fonction pour afficher l'image chargée
+
+function previewImage(selectedFile, imagePreview){
+    if (selectedFile) {
+
+        const reader = new FileReader();
 
         reader.onload = function (e) {
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '100%';
-            preview.appendChild(img);
-        }
+            const imageUrl = e.target.result;
 
-        reader.readAsDataURL(input.files[0]);
+            if (imagePreview) {
+                imagePreview.style.display="block";
+                imagePreview.src = imageUrl;
+            }
+        };
+
+        reader.readAsDataURL(selectedFile);
     }
-}*/
+}
+
+
+// fonction poster un nouveau travail
+
+async function postNewWork (formData){
+    const postWorkApiUrl= "http://localhost:5678/api/works";
+    const Token = sessionStorage.getItem("Token");
+    console.log(Token)
+
+    await fetch(postWorkApiUrl, {
+        method: "POST",
+        body: formData,
+        headers: {
+            "Authorization": `Bearer ${Token}`
+        }
+    })
+    .then(response => response.json())
+            .then(data => {
+                console.log("Réponse de l'API :", data);
+                
+            })
+            .catch(error => {
+                console.error("Erreur lors de la requête à l'API :", error);
+                // Gérez les erreurs ici
+            });
+}
