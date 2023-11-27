@@ -32,8 +32,11 @@ function createContentModale (){
 
     //ajout de la galerie
     const modaleContent = document.querySelector(".modale__content")
+    modaleContent.innerHTML="";
     const modaleGallery = createDomElements("div",modaleContent, "modale__content__gallery" );
     createModalGallery()
+
+    const emptyDiv = createDomElements("div", modaleContent, "design__line")
 
     //ajout du bouton ajouter une photo
     const modaleAddButton = createDomElements("button", modaleContent, "modale__submit")

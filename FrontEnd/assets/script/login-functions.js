@@ -57,9 +57,7 @@ async function sendLoginData(chargeUtile) {
 // fonction afficher message erreur
 
 function messageErreur() {
-    const loginForm = document.querySelector(".login__form");
-    const messageErreurElement = createDomElements("div", loginForm, "messageErreur" )
-    messageErreurElement.innerText = "Les informations saisies sont incorrectes, veuillez réessayer";
+    document.querySelector(".messageErreur").style.display = "flex"
 }
 
 

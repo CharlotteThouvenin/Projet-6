@@ -12,9 +12,9 @@ async function createEditModale(){
     backArrow.style.opacity = "1"
 
     backArrow.addEventListener("click", function(){
-        modaleContent.innerHTML="";
-        backArrow.style.opacity = "0"
-        createContentModale()
+        closeModale()
+        afficherModale()
+        backArrow.style.opacity="0";
         })
 
  
@@ -53,6 +53,7 @@ async function createEditModale(){
      imageInput.accept=".jpeg, .png "
      imageInput.id = "image__input"
      imageInput.classList.add("hide")
+     imageInput.required = "true"
 
      imageInput.addEventListener("change", function () {
        
@@ -70,7 +71,7 @@ async function createEditModale(){
      ajoutbutton.innerText = "+ Ajouter photo"
      ajoutbutton.htmlFor = "image__input"
 
-     const ajoutDetails = createDomElements("p", addImageForm)
+     const ajoutDetails = createDomElements("p", addImageForm, "modale__content__form__load__p")
      ajoutDetails.innerText ="jpg, png : 4mo max"
 
      const titreLabel = createDomElements("label", addImageForm)
@@ -78,12 +79,14 @@ async function createEditModale(){
      titreLabel.innerText = "Titre"
      const titreInput = createDomElements("input", addImageForm)
      titreInput.name="titre"
+     titreInput.required = "true"
 
      const categorieLabel = createDomElements("label", addImageForm)
      categorieLabel.for="categorie"
      categorieLabel.innerText="Catégorie"
      const categorieInput = createDomElements("select", addImageForm)
-     categorieInput.name = "categorie"
+     categorieInput.name = "categorie";
+     categorieInput.required="true"
      const defaultCategorieChoice = createDomElements("option", categorieInput)
      defaultCategorieChoice.value =""
 
@@ -95,8 +98,15 @@ async function createEditModale(){
         categorieChoice.innerText = categoriesList[i].name
      }
 
-     const formSubmitButton = createDomElements("button", addImageForm, "modale__content__form__submit")
-    }
+     const emptyDiv = createDomElements("div", addImageForm, "design__line")
+
+     const formSubmitButton = createDomElements("button", addImageForm, "modale__content__form__submit");
+     formSubmitButton.innerText = "Valider";
+
+     if(titreInput.value !== "" && imageInput.files.length > 0 && categorieInput.value !== ""){
+        formSubmitButton.style.backgroundColor = "rgba(29, 97, 84, 1)";
+     }
+    };
 
 // fonction pour afficher l'image chargée
 
@@ -117,6 +127,9 @@ function previewImage(selectedFile, imagePreview){
         reader.readAsDataURL(selectedFile);
     }
 }
+
+
+  
 
 
 // fonction poster un nouveau travail
@@ -140,6 +153,5 @@ async function postNewWork (formData){
             })
             .catch(error => {
                 console.error("Erreur lors de la requête à l'API :", error);
-                // Gérez les erreurs ici
             });
 }
