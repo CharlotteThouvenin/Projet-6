@@ -58,8 +58,10 @@ async function createModalGallery (){
 
 function genererModaleGallery(data) {
 
+    const modalegallery = document.querySelector(".modale__content__gallery");
+        modalegallery.innerHTML=""
+
     for (let i = 0; i < data.length; i++) {
-        const modalegallery = document.querySelector(".modale__content__gallery");
 
         const work = data[i];
 
