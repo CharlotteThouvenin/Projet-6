@@ -34,11 +34,7 @@ function chargeUtile(data) {
 // fonction envoi donner authentification
 async function sendLoginData(chargeUtile) {
     try{
-        const postStatut = await fetch("http://localhost:5678/api/users/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: chargeUtile
-        })
+        postLogInData(chargeUtile)
 
         if (!postStatut.ok) {
             throw new Error(`${postStatut.status}: ${errorMessage}`);
@@ -57,7 +53,7 @@ async function sendLoginData(chargeUtile) {
 // fonction afficher message erreur
 
 function messageErreur() {
-    document.querySelector(".messageErreur").style.display = "flex"
+    document.querySelector("messageErreur").style.display = "block";
 }
 
 

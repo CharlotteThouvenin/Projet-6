@@ -1,13 +1,3 @@
-// fonction fetch avec methode get pour récupérer les données
-
-async function getFetch (url) {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return(data)
-}
-
-
 // fonction pour créer un élément dans le dom
 
 function createDomElements (type, parent, className){
@@ -19,10 +9,9 @@ function createDomElements (type, parent, className){
 }
 
 
+// créer la galerie de la page d'accueil
 
-// fonction generer une galerie (initiale et filtrées)
-
-function genererGallery(data) {
+function createIndexGallery(data) {
     for (let i = 0; i < data.length; i++) {
         const gallery = document.querySelector(".gallery");
 
@@ -42,20 +31,35 @@ function genererGallery(data) {
     }
 }
 
+// créer les filtres de la page index
 
-// fonction filtrer
+function afficherFiltres (categories){
+    const portfolio = document.getElementById("portfolio");
+    const gallery = document.querySelector(".gallery")
+    const filtres = createDomElements("div",portfolio,"filtres")
 
-async function filtrer(category) {
-    const works = await getAllWorks ()
-    const filteredWorks = works.filter(work => work.category.name === category);
+    portfolio.insertBefore(filtres, gallery);
+    const tous = {
+        id:0,
+        name:"Tous"
+    }
+    categories.unshift(tous)
 
-    return filteredWorks
+    const boutonsArray = []
+
+    for (let i = 0; i < categories.length; i++) {
+        const category = categories[i].name;
+        const boutonFiltres = createDomElements("button", filtres);
+        boutonFiltres.innerText = category;
+        boutonsArray.push(boutonFiltres);
+
+        boutonsArray.forEach((bouton, index) => {
+            bouton.categoryName = categories[index].name
+        })
+    }
 }
 
 
-// fontion pour mettre à jour la gallery
 
-async function updateIndexGallery(){
-    document.querySelector(".gallery").innerHTML = "";
-    generateInitialWoksGallery();
-}
+
+export {createDomElements, createIndexGallery, afficherFiltres}

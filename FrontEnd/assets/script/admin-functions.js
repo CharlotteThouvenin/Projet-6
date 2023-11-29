@@ -52,10 +52,4 @@ function addEditButton() {
 }
 
 
-/*
-function listenerEditButton (editButton){
-    editButton.addEventListener("click", function(){
-        createGalleryModale();
-    })
-}*/
 

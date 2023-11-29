@@ -25,9 +25,11 @@ async function createEditModale() {
 
     // ajout contenu
 
+    // création du formulaire
     const addImageForm = createDomElements("form", modaleContent, "modale__content__form")
     addImageForm.enctype = "multipart/form-data"
 
+    // envoi des données du formulaire
     addImageForm.addEventListener("submit", function (event) {
         event.preventDefault()
         let formData = new FormData();
@@ -39,6 +41,7 @@ async function createEditModale() {
         updateIndexGallery();
     })
 
+    // emplacement pour prévisualiser l'image
     const divLoadImage = createDomElements("div", addImageForm, "modale__content__form__load");
     const imagePreview = createDomElements("img", divLoadImage, "modale__content__form__load__preview")
     imagePreview.style.display = "none";
@@ -47,6 +50,7 @@ async function createEditModale() {
     imageIcon.classList.add("fa-solid")
     imageIcon.classList.add("fa-image")
 
+    // input pour charger l'image
     const imageInput = createDomElements("input", addImageForm, "modale__content__form__load__input");
     imageInput.type = "file"
     imageInput.accept = ".jpeg, .png "
@@ -54,6 +58,7 @@ async function createEditModale() {
     imageInput.classList.add("hide")
     imageInput.required = "true"
 
+    // afficher la prévisualisation de l'image
     imageInput.addEventListener("change", function () {
 
         const selectedFile = imageInput.files[0];
@@ -65,7 +70,7 @@ async function createEditModale() {
     });
 
 
-
+    // bouton pour charger l'image
     const ajoutbutton = createDomElements("label", addImageForm, "modale__content__form__load__submit")
     ajoutbutton.innerText = "+ Ajouter photo"
     ajoutbutton.htmlFor = "image__input"
@@ -73,6 +78,7 @@ async function createEditModale() {
     const ajoutDetails = createDomElements("p", addImageForm, "modale__content__form__load__p")
     ajoutDetails.innerText = "jpg, png : 4mo max"
 
+    // input titre
     const titreLabel = createDomElements("label", addImageForm)
     titreLabel.for = "titre"
     titreLabel.innerText = "Titre"
@@ -80,6 +86,7 @@ async function createEditModale() {
     titreInput.name = "titre"
     titreInput.required = "true"
 
+    // input categorie
     const categorieLabel = createDomElements("label", addImageForm)
     categorieLabel.for = "categorie"
     categorieLabel.innerText = "Catégorie"
@@ -99,22 +106,22 @@ async function createEditModale() {
 
     const emptyDiv = createDomElements("div", addImageForm, "design__line")
 
+    // bouton de validation du formulaire
     const formSubmitButton = createDomElements("button", addImageForm, "modale__content__form__submit");
     formSubmitButton.innerText = "Valider";
 
     // Fonction pour vérifier si tous les champs sont remplis
-    function areAllFieldsFilled() {
+    function allFieldscompleted() {
         return titreInput.value !== "" && imageInput.files.length > 0 && categorieInput.value !== "";
     }
 
     // Fonction pour mettre à jour le style du bouton "Valider"
     function updateSubmitButtonStyle() {
-        const isFieldsFilled = areAllFieldsFilled();
-
-        formSubmitButton.classList.toggle("active", isFieldsFilled);
+        const isFieldsCompleted = allFieldscompleted();
+        formSubmitButton.classList.toggle("active", isFieldsCompleted);
     }
 
-    // Ajoutez un seul événement de changement pour tous les inputs
+    // lecture des champs pour savoir si il sont remplis
     titreInput.addEventListener("change", updateSubmitButtonStyle);
     imageInput.addEventListener("change", updateSubmitButtonStyle);
     categorieInput.addEventListener("change", updateSubmitButtonStyle);
@@ -149,7 +156,6 @@ function previewImage(selectedFile, imagePreview) {
 async function postNewWork(formData) {
     const postWorkApiUrl = "http://localhost:5678/api/works";
     const Token = sessionStorage.getItem("Token");
-    console.log(Token)
 
     await fetch(postWorkApiUrl, {
             method: "POST",
