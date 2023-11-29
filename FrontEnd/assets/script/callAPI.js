@@ -16,7 +16,7 @@ async function getAllWorks() {
 
     const worksUrl = `${baseURL}works`;
     const works = await getFetch(worksUrl)
-    console.log(worksUrl)
+
     return works
 }
 
@@ -39,7 +39,6 @@ async function getAllCategories(){
 
 async function postLogInData (chargeUtile){
     const loginURL = `${baseURL}users/login`;
-    console.log(loginURL)
     const postStatut = await fetch(loginURL,
 
     {
@@ -88,4 +87,4 @@ async function postNewWork(formData) {
         });
 }
 
-export {getAllWorks, getAllCategories, postLogInData, postNewWork}
+export {getAllWorks, getAllCategories, postLogInData, postNewWork, deleteWork}

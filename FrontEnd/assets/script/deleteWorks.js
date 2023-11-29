@@ -1,8 +1,11 @@
 // affichage de la modale
 
+import { getAllWorks, deleteWork } from "./callAPI.js";
+import { updateIndexGallery, createDomElements, createDeleteModaleContent} from "./createDOMelements.js";
+
 function afficherModale(){
     document.querySelector(".modale__container").style.display = "flex"
-    createContentModale()
+    createDeleteModaleContent()
 }
 
 
@@ -19,36 +22,6 @@ modaleContainer.addEventListener("click", function(event) {
  })
 
 
-
-
-
-// Création du contenu de la modale
-
-function createContentModale (){
-
-    const modale = document.querySelector(".modale")
-    const modaleTitle = document.querySelector(".modale__title")
-    modaleTitle.innerText = "Galerie photo";
-
-    //ajout de la galerie
-    const modaleContent = document.querySelector(".modale__content")
-    modaleContent.innerHTML="";
-    const modaleGallery = createDomElements("div",modaleContent, "modale__content__gallery" );
-    createModalGallery()
-
-    const emptyDiv = createDomElements("div", modaleContent, "design__line")
-
-    //ajout du bouton ajouter une photo
-    const modaleAddButton = createDomElements("button", modaleContent, "modale__submit")
-    modaleAddButton.innerText = "Ajouter une photo";
-    modaleAddButton.addEventListener("click", function(){
-        modaleContent.innerHTML="";
-        createEditModale()
-    })
-}
-
-
-
 // fonction pour générer la galerie photo
 
 async function createModalGallery (){
@@ -57,11 +30,11 @@ async function createModalGallery (){
 }
 
 function genererModaleGallery(data) {
-
     const modalegallery = document.querySelector(".modale__content__gallery");
         modalegallery.innerHTML=""
 
     for (let i = 0; i < data.length; i++) {
+        const modalegallery = document.querySelector(".modale__content__gallery");
 
         const work = data[i];
 
@@ -97,27 +70,15 @@ function genererModaleGallery(data) {
 
 // fonction pour fermer la modale
 
-function closeModale (){
+async function closeModale (){
     const modaleContainer=document.querySelector(".modale__container");
     modaleContainer.style.display="none";
     const modaleContent = document.querySelector(".modale__content");
     modaleContent.innerHTML="";
-    updateIndexGallery();
+    
+    updateIndexGallery ();
 }
 
 
 
-
-//fonction  pour supprimer un travail
-
-async function deleteWork (id){
-    await fetch(`http://localhost:5678/api/works/${id}` , {
-        method: "DELETE",
-        headers: { 
-            "Content-Type": "application/json",
-            "Authorization": "Bearer "+ sessionStorage.getItem("Token")
-        },
-        
-    })
-}
-
+export {afficherModale, createModalGallery}

@@ -1,3 +1,9 @@
+import { createDomElements, createDeleteModaleContent } from "./createDOMelements.js";
+import { getAllCategories, postNewWork } from "./callAPI.js";
+
+
+
+
 // fonction generer la modale d'ajout de photo
 
 async function createEditModale() {
@@ -12,8 +18,9 @@ async function createEditModale() {
     backArrow.style.opacity = "1"
 
     backArrow.addEventListener("click", function () {
-        backArrow.style.opacity = "0"
-        createContentModale()
+        backArrow.style.opacity = "0";
+        modaleContent.innerHTML = "";
+        createDeleteModaleContent()
     })
 
 
@@ -36,7 +43,6 @@ async function createEditModale() {
         formData.append("title", titreInput.value);
         formData.append("image", imageInput.files[0]);
         formData.append("category", categorieInput.value)
-        console.log(formData)
         postNewWork(formData);
         updateIndexGallery();
     })
@@ -98,7 +104,7 @@ async function createEditModale() {
 
     const categoriesList = await getAllCategories()
 
-    for (let i = 1; i < categoriesList.length; i++) {
+    for (let i = 0; i < categoriesList.length; i++) {
         const categorieChoice = createDomElements("option", categorieInput)
         categorieChoice.value = categoriesList[i].id
         categorieChoice.innerText = categoriesList[i].name
@@ -147,29 +153,4 @@ function previewImage(selectedFile, imagePreview) {
     }
 }
 
-
-
-
-
-// fonction poster un nouveau travail
-
-async function postNewWork(formData) {
-    const postWorkApiUrl = "http://localhost:5678/api/works";
-    const Token = sessionStorage.getItem("Token");
-
-    await fetch(postWorkApiUrl, {
-            method: "POST",
-            body: formData,
-            headers: {
-                "Authorization": `Bearer ${Token}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Réponse de l'API :", data);
-
-        })
-        .catch(error => {
-            console.error("Erreur lors de la requête à l'API :", error);
-        });
-}
+export {createEditModale}

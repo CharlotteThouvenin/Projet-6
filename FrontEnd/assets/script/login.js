@@ -5,6 +5,7 @@ import {postLogInData} from "./callAPI.js"
 loginDataListener()
 
 
+
 // creation de l'objet d'authentification au submit
 
 function loginDataListener() {
@@ -28,7 +29,7 @@ function loginDataListener() {
 
 }
 
-// fonction récupérer les données du formulaire d'authentification
+
 
 
 
