@@ -38,12 +38,16 @@ async function getAllCategories(){
 // envoi données authentification
 
 async function postLogInData (chargeUtile){
-    const postStatut = await fetch(`${baseURL}users/login`,
+    const loginURL = `${baseURL}users/login`;
+    console.log(loginURL)
+    const postStatut = await fetch(loginURL,
+
     {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: chargeUtile
     })
+    return postStatut
 }
 
 // supprimer un travail

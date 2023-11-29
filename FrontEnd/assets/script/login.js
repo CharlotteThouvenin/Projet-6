@@ -1,3 +1,10 @@
+
+import {postLogInData} from "./callAPI.js"
+
+
+loginDataListener()
+
+
 // creation de l'objet d'authentification au submit
 
 function loginDataListener() {
@@ -34,7 +41,7 @@ function chargeUtile(data) {
 // fonction envoi donner authentification
 async function sendLoginData(chargeUtile) {
     try{
-        postLogInData(chargeUtile)
+        const postStatut = await postLogInData(chargeUtile);
 
         if (!postStatut.ok) {
             throw new Error(`${postStatut.status}: ${errorMessage}`);
@@ -53,7 +60,7 @@ async function sendLoginData(chargeUtile) {
 // fonction afficher message erreur
 
 function messageErreur() {
-    document.querySelector("messageErreur").style.display = "block";
+    document.querySelector(".messageErreur").style.display = "block";
 }
 
 
