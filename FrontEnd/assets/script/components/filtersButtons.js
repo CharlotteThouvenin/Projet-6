@@ -1,5 +1,5 @@
-import { getAllWorks } from "./callAPI.js";
-import { createIndexGallery } from "./createDOMelements.js";
+import { getAllWorks } from "../utils/callAPI.js";
+import { createIndexGallery } from "../DOM/indexGallery.js"
 
 // fonction filtrer
 

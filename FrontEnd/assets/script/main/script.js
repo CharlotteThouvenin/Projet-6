@@ -1,7 +1,8 @@
-import { getAllCategories, getAllWorks } from "./callAPI.js";
-import { afficherFiltres, createIndexGallery, createlogOut, createEditionModeBanner, createEditButton } from "./createDOMelements.js";
-import { listenerFiltres } from "./filtersButtons.js";
-import { logingOut, editWorks} from "./editButtons.js";
+import { getAllCategories, getAllWorks } from "../utils/callAPI.js";
+import {createIndexGallery, afficherFiltres } from "../DOM/indexGallery.js";
+import{createlogOut, createEditionModeBanner, createEditButton} from "../DOM/admin.js"
+import { logingOut, editWorks } from "../components/editButtons.js";
+import { listenerFiltres } from "../components/filtersButtons.js";
 
 
 const token = sessionStorage.getItem("Token")

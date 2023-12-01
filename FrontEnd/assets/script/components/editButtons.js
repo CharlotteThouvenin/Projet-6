@@ -1,4 +1,4 @@
-import { afficherModale } from "./deleteWorks.js"
+import { afficherDeleteModale } from "../Services/deleteWorks.js"
 
 // bouton "logout"
 
@@ -11,7 +11,7 @@ function logingOut(button) {
 // bouton "modifier"
 function editWorks (button){
     button.addEventListener("click", function(){
-       afficherModale()
+       afficherDeleteModale()
     })
 }
 

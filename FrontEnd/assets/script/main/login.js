@@ -1,5 +1,5 @@
 
-import {postLogInData} from "./callAPI.js"
+import {postLogInData} from "../utils/callAPI.js"
 
 
 loginDataListener()
