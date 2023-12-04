@@ -1,5 +1,9 @@
-import { createDomElements } from "../utils/helpers.js";
-import { getAllWorks } from "../utils/callAPI.js";
+import {
+    createDomElements
+} from "../utils/helpers.js";
+import {
+    getAllWorks
+} from "../utils/callAPI.js";
 
 // créer la galerie de la page d'accueil
 
@@ -13,12 +17,12 @@ function createIndexGallery(data) {
         const workFigure = createDomElements("figure", gallery, "gallery__figure");
 
         //création d'une balise image 
-        const workImage = createDomElements("img", workFigure, "gallery__figure__img","autre-class");
+        const workImage = createDomElements("img", workFigure, "gallery__figure__img", "autre-class");
         workImage.src = work.imageUrl;
         workImage.alt = work.title;
 
         //creation du titre
-        const workFigCaption = createDomElements("figcaption", workFigure, "gallery__figure__figcaption")
+        const workFigCaption = createDomElements("figcaption", workFigure, "gallery__figure__figcaption");
         workFigCaption.innerText = work.title;
     }
 }
@@ -27,24 +31,24 @@ function createIndexGallery(data) {
 // fonction pour mettre à jour la galerie
 
 async function updateIndexGallery() {
-    document.querySelector(".gallery").innerHTML="";
+    document.querySelector(".gallery").innerHTML = "";
     const works = await getAllWorks();
     createIndexGallery(works)
 }
 
 // créer les filtres de la page index
 
-function afficherFiltres (categories){
+function afficherFiltres(categories) {
     const portfolio = document.getElementById("portfolio");
-    const gallery = document.querySelector(".gallery")
-    const filtres = createDomElements("div",portfolio,"filtres")
+    const gallery = document.querySelector(".gallery");
+    const filtres = createDomElements("div", portfolio, "filtres");
 
     portfolio.insertBefore(filtres, gallery);
     const tous = {
-        id:0,
-        name:"Tous"
+        id: 0,
+        name: "Tous"
     }
-    categories.unshift(tous)
+    categories.unshift(tous);
 
     const boutonsArray = []
 
@@ -60,6 +64,8 @@ function afficherFiltres (categories){
     }
 }
 
-export {createIndexGallery, updateIndexGallery, afficherFiltres}
-
-
+export {
+    createIndexGallery,
+    updateIndexGallery,
+    afficherFiltres
+}

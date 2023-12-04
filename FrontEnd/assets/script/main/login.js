@@ -1,5 +1,6 @@
-
-import {postLogInData} from "../utils/callAPI.js"
+import {
+    postLogInData
+} from "../utils/callAPI.js"
 
 
 loginDataListener()
@@ -10,7 +11,7 @@ loginDataListener()
 
 function loginDataListener() {
     const loginForm = document.querySelector(".login__form");
-    let loginData = []
+    let loginData = [];
 
     loginForm.addEventListener("submit", function (event) {
 
@@ -35,21 +36,21 @@ function loginDataListener() {
 
 // fonction convertir en json
 function chargeUtile(data) {
-    const chargeUtileData = JSON.stringify(data)
+    const chargeUtileData = JSON.stringify(data);
     return chargeUtileData
 }
 
 // fonction envoi donner authentification
 async function sendLoginData(chargeUtile) {
-    try{
+    try {
         const postStatut = await postLogInData(chargeUtile);
 
         if (!postStatut.ok) {
             throw new Error(`${postStatut.status}: ${errorMessage}`);
         }
 
-        const response = await postStatut.json()
-       
+        const response = await postStatut.json();
+
         logInOk(response)
 
     } catch (error) {
@@ -69,9 +70,9 @@ function messageErreur() {
 
 // fonction renvoyer sur page d'acceuil et stocker le token
 
-function logInOk(response){
+function logInOk(response) {
     // stocker le token
     sessionStorage.setItem("Token", response.token);
     // renvoi sur la page d'accueil
-    window.location.replace("index.html")
-}   
+    window.location.replace("index.html");
+}

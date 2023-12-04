@@ -1,18 +1,23 @@
-import { afficherDeleteModale } from "../Services/deleteWorks.js"
+import {
+    afficherDeleteModale
+} from "../Services/deleteWorks.js";
 
 // bouton "logout"
 
 function logingOut(button) {
     button.addEventListener("click", function () {
-        sessionStorage.clear("Token")
-    })
-}
+        sessionStorage.clear("Token");
+    });
+};
 
 // bouton "modifier"
-function editWorks (button){
-    button.addEventListener("click", function(){
-       afficherDeleteModale()
-    })
-}
+function editWorks(button) {
+    button.addEventListener("click", function () {
+        afficherDeleteModale();
+    });
+};
 
-export {logingOut, editWorks}
+export {
+    logingOut,
+    editWorks
+}
