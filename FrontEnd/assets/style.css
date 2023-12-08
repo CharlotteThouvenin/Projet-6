@@ -519,11 +519,11 @@ footer nav ul {
 	background-color: rgba(167, 167, 167, 1);
 	color: #FFFFFF;
 	margin-top: 50px;
-	cursor: pointer;
 }
 
 .active{
 	background-color: #1D6154;
+	cursor: pointer;
 }
 
 .design__line{
