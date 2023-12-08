@@ -19,7 +19,7 @@ import {
 
 async function createDeleteModaleContent() {
 
-    listenerCloseModale()
+    listenerCloseModale();
 
     const modaleTitle = document.querySelector(".modale__title");
     modaleTitle.innerText = "Galerie photo";
